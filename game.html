@@ -27,21 +27,44 @@
       context.drawImage(img, x, y)
     }
 
+    var leftDown = false
+    var rightDown = false
+    var speed = 5
     // events
     window.addEventListener('keydown', function(event){
       log('keydown')
       var k = event.key
       // log(event)
       if (k === 'a') {
-        x -= 10
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(img, x, y)
+        leftDown = true
       }else if (k === 'd') {
-        x += 10
-        context.clearRect(0, 0, canvas.width, canvas.height)
-        context.drawImage(img, x, y)
+        rightDown = true
       }
     })
+
+    window.addEventListener('keyup', function(event){
+      log('keyup')
+      var k = event.key
+      // log(event)
+      if (k === 'a') {
+        leftDown = false
+      }else if (k === 'd') {
+        rightDown = false
+      }
+    })
+
+    setInterval(function(){
+      // update x
+      if (leftDown) {
+        x -= speed
+      } else if (rightDown) {
+        x += speed
+      }
+      // draw
+      context.clearRect(0, 0, canvas.width, canvas.height)
+      context.drawImage(img, x, y)
+    }, 1000/30)
+
   </script>
 </body>
 </html>
