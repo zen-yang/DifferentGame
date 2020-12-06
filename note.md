@@ -34,3 +34,17 @@ setInterval(function(){
 paddle 的逻辑应该放在 Paddle 里面，不要放出来污染
 
 一个函数，不返回任何值，执行一个动作，应该用动词
+
+#### 第三次提交 抽离出Paddle
+
+将 canvas 事件监听 setInterval 抽离合成
+
+将 setInterval 放到 Game 里面，在 Game 里面调用 setInterval
+再用一个函数来注册这个事件
+
+actions 是一个对象，存满了它的 key 和 它的函数，我们把函数注册进来
+函数和 key 通过另一个函数注册到里面去
+
+window 全局监听哪个键被按下松开，改变 keydowns 对应键的值为 true/false
+从而一旦哪个键被按下，keydowns 的 对应键的值为 true
+这是执行 actions 的 对应键 的 函数
