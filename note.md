@@ -48,3 +48,11 @@ actions 是一个对象，存满了它的 key 和 它的函数，我们把函数
 window 全局监听哪个键被按下松开，改变 keydowns 对应键的值为 true/false
 从而一旦哪个键被按下，keydowns 的 对应键的值为 true
 这是执行 actions 的 对应键 的 函数
+
+#### 第四次提交 封装好挡板函数
+
+在 \_\_main 函数内，可以将 `var paddle = Paddle()` 设置为
+`paddle = Paddle()`,然后在 Chrome 的 Console 里
+`paddle.image.width` 测试是否能有这种语法获取宽度
+
+#### 第五次提交 增加小球和碰撞反弹
