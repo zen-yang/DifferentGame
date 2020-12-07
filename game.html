@@ -15,24 +15,58 @@
   <script src="paddle.js"></script>
   <script src="ball.js"></script>
   <script src="block.js"></script>
+  <script src="level.js"></script>
 </head>
 <body>
   <canvas id="id-canvas" width="400" height="300"></canvas>
+  <hr>
+  <input id="id-input-speed" type="range" value="1">
   <script>
+    var loadLevel = function(n) {
+      n = n - 1
+      var level = levels[n]
+      var blocks = []
+      for (var i = 0; i < level.length; i++) {
+        var p = level[i]
+        var b = Block(p)
+        blocks.push(b)
+      }
+      return blocks
+    }
+
+    var blocks = []
+    var enableDebugMode = function(enable) {
+      if (!enable) {
+        return
+      }
+      window.paused = false
+      // 这是为了 debug
+      window.addEventListener('keydown', function(event){
+        var k = event.key
+        if (k == 'p') {
+          // 暂停功能
+          paused = !paused
+        } else if ('1234567'.includes(k)) {
+          // 为了 debug 临时加的载入关卡功能
+          blocks = loadLevel(Number(k))
+        }
+      })
+      // 控制速度
+      document.querySelector('#id-input-speed').addEventListener('input', function(event){
+        var input = event.target
+        fps = Number(input.value)
+      })
+    }
+
     var __main = function() {
+      enableDebugMode(true)
+
       var game = Game(30)
 
       var paddle = Paddle()    
       var ball = Ball()
 
-      var blocks = []
-      for (var i = 0; i < 3; i++) {
-        var b = Block()
-        // 设置 block 坐标
-        b.x = i * 150
-        b.y = 50
-        blocks.push(b)
-      }
+      blocks = loadLevel(1)
 
       var paused = false
       game.registerAction('a', function(){
@@ -44,14 +78,9 @@
       game.registerAction('f', function(){
         ball.fire()
       })
-      window.addEventListener('keydown', function(event){
-        if (event.key == 'p') {
-          paused = !paused
-        }
-      })
 
       game.update = function() {
-        if (paused) {
+        if (window.paused) {
           return
         }
         ball.move()
@@ -85,7 +114,6 @@
     }
 
     __main()
-
   </script>
 </body>
 </html>

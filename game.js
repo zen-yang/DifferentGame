@@ -1,4 +1,4 @@
-var Game = function(fps) {
+var Game = function() {
   var g = {
     actions: {},
     keydowns: {},
@@ -24,7 +24,8 @@ var Game = function(fps) {
     g.actions[key] = callback
   }
   // timer
-  setInterval(function(){
+  window.fps = 30
+  var runloop = function() {
     // events
     // 遍历它的 key, 检查一下，如果被按下了，就执行函数
     var actions = Object.keys(g.actions)
@@ -42,6 +43,14 @@ var Game = function(fps) {
 
     // draw
     g.draw()
+    // next run loop
+    setTimeout(function(){
+      runloop()
+    }, 1000/fps)
+  }
+
+  setTimeout(function(){
+    runloop()
   }, 1000/fps)
 
   return g
