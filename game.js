@@ -2,6 +2,7 @@ var Game = function(fps, images, runCallback) {
   // images 是一个对象，里面是图片的引用名字和图片
   // 程序会在所有图片载入成功后才运行
   var g = {
+    scene: null,
     actions: {},
     keydowns: {},
     images: {},
@@ -21,7 +22,14 @@ var Game = function(fps, images, runCallback) {
   window.addEventListener('keyup', function(event){
     g.keydowns[event.key] = false
   })
-  //
+  // update
+  g.update = function() {
+    g.scene.update()
+  }
+  // draw 
+  g.draw = function() {
+    g.scene.draw()
+  }
   // 把按键 key 按下执行的函数存到 actions 里面
   g.registerAction = function(key, callback) {
     g.actions[key] = callback
@@ -66,7 +74,7 @@ var Game = function(fps, images, runCallback) {
       // 所有图片都成功载入之后，调用 run
       loads.push(1)
       if (loads.length == names.length) {
-        g.run()
+        g.__start()
       }
     }
   }
@@ -81,12 +89,18 @@ var Game = function(fps, images, runCallback) {
     return image
   }
 
-  g.run = function() {
-    runCallback(g)
+  g.runWithScene = function(scene) {
+    g.scene = scene
     // 开始运行程序
     setTimeout(function(){
       runloop()
     }, 1000/fps)
+  }
+  g.replaceScene = function(scene) {
+    g.scene = scene
+  }
+  g.__start = function(scene) {
+    runCallback(g)
   }
 
   return g
