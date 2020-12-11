@@ -6,7 +6,7 @@ var Block = function(game, position) {
     x: p[0],
     y: p[1],
     alive: true,
-    lives: p[2] || 1,
+    lives: p[2],
   }
   o.image = img.image
   o.w = img.w

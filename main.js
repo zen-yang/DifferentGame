@@ -29,19 +29,19 @@ var enableDebugMode = function (game, enable) {
   // 控制速度
   document.querySelector('#id-input-speed').addEventListener('input', function (event) {
     var input = event.target
-    fps = Number(input.value)
+    window.fps = Number(input.value)
   })
 }
 
 var __main = function () {
   var images = {
-    ball: 'ball.png',
-    block: 'block.png',
-    paddle: 'paddle.png',
+    ball: 'img/ball.png',
+    block: 'img/block.png',
+    paddle: 'img/paddle.png',
   }
 
-  var game = Game(30, images, function(g) {
-    var s = Scene(g)
+  var game = DifferentGame.instance(30, images, function(g) {
+    var s = SceneTitle.new(g)
     g.runWithScene(s)
   })
   enableDebugMode(game, true)

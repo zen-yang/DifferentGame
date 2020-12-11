@@ -22,8 +22,8 @@ var Scene = function(game) {
 
   s.draw = function() {
     // draw background
-    game.context.fillStyle = "#544"
-    game.context.fillRect(0, 0, 400, 300)
+    // game.context.fillStyle = "#544"
+    // game.context.fillRect(0, 0, 400, 300)
     // draw
     game.drawImage(paddle)
     game.drawImage(ball)
@@ -46,7 +46,8 @@ var Scene = function(game) {
     // 判断游戏结束
     if (ball.y > paddle.y) {
       // 跳转到 游戏结束 的场景
-      var end = SceneEnd(game)
+      var end = SceneEnd.new(game)
+      log('end', end)
       game.replaceScene(end)
     }
     // 判断相撞
